@@ -1,0 +1,19 @@
+@CalculatorApi_HostAddress = http://localhost:5000
+
+### Add two numbers
+POST {{CalculatorApi_HostAddress}}/api/calculator/add
+Content-Type: application/json
+
+{
+  "number1": 10,
+  "number2": 5
+}
+
+### Subtract two numbers
+POST {{CalculatorApi_HostAddress}}/api/calculator/subtract
+Content-Type: application/json
+
+{
+  "number1": 10,
+  "number2": 5
+}
