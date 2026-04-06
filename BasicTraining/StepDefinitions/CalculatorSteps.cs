@@ -3,6 +3,7 @@ using Allure.Commons;
 using CalculatorAPI;
 using FluentAssertions;
 using QATraining.Tests.Helper;
+using QATraining.Tests.Helper.Enums;
 using Reqnroll;
 using Reqnroll.BoDi;
 
@@ -32,7 +33,7 @@ public class CalculatorSteps(ObjectContainer container, ScenarioContext scenario
     {
         ScenarioContext.SetSecondNumber(number);
     }
-
+    
     [When("I add the two numbers")]
     public async Task WhenIAddTheTwoNumbers()
     {
@@ -41,15 +42,22 @@ public class CalculatorSteps(ObjectContainer container, ScenarioContext scenario
             Number1 = ScenarioContext.GetFirstNumber(),
             Number2 = ScenarioContext.GetSecondNumber()
         };
-        ScenarioContext["Operation"] = "+";
+        ScenarioContext.SetOperation("+");
         var response = await _calculator.AddAsync(request);
         ScenarioContext.SetResponse(response);
     }
 
     [When("I subtract the two numbers")]
-    public void WhenISubtractTheTwoNumbers()
+    public async Task WhenISubtractTheTwoNumbers()
     {
-        ScenarioContext.StepIsPending();
+        var request = new CalculationRequest()
+        {
+            Number1 = ScenarioContext.GetFirstNumber(),
+            Number2 = ScenarioContext.GetSecondNumber()
+        };
+        ScenarioContext.SetOperation("-");
+        var response = await _calculator.SubtractAsync(request);
+        ScenarioContext.SetResponse(response);
     }
 
     [Then("the result should be {int}")]
@@ -57,7 +65,7 @@ public class CalculatorSteps(ObjectContainer container, ScenarioContext scenario
     {
         var firstNumber = ScenarioContext.GetFirstNumber();
         var secondNumber = ScenarioContext.GetSecondNumber();
-        var operation = ScenarioContext["Operation"] as string;
+        var operation = ScenarioContext.GetOperation();
         var response = ScenarioContext.GetResponse();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         response.Result.Number1.Should().Be(firstNumber);

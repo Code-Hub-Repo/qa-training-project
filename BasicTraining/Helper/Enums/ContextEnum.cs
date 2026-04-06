@@ -4,5 +4,6 @@ public enum ContextEnum
 {
     FirstNumber,
     SecondNumber,
-    Response
+    Response,
+    Operation
 }

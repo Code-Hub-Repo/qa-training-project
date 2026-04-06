@@ -19,4 +19,16 @@ So that I can perform basic arithmetic operations
         Given I my first number is 10
         And I my second number is 6
         When I subtract the two numbers
-        Then the result should be 6
+        Then the result should be 4
+
+    Scenario: Add a negative number
+        Given I my first number is -7
+        And I my second number is 2
+        When I add the two numbers
+        Then the result should be -5
+
+    Scenario: Subtract with a large number
+        Given I my first number is 2147483647
+        And I my second number is 10
+        When I subtract the two numbers
+        Then the result should be 2147483637

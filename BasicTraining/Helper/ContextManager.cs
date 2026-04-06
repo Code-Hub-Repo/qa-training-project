@@ -30,4 +30,10 @@ public  static class ContextManager
 
     public static SwaggerResponse<CalculationResult> GetResponse(this ScenarioContext scenarioContext) =>
         scenarioContext.GetContextValue<SwaggerResponse<CalculationResult>>(nameof(ContextEnum.Response));
+    
+    public static void SetOperation(this ScenarioContext scenarioContext, string operation) =>
+        scenarioContext[nameof(ContextEnum.Operation)] = operation;
+
+    public static string GetOperation(this ScenarioContext scenarioContext) =>
+        scenarioContext.GetContextValue<string>(nameof(ContextEnum.Operation));
 }

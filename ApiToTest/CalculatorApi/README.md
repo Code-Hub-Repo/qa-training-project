@@ -12,6 +12,15 @@ A simple ASP.NET Core Web API with two endpoints for basic arithmetic operations
 
 ## Build
 
+### Using IDE
+- **Visual Studio**: Build → Build Solution (Ctrl+Shift+B)
+- **Rider**: Build → Build Project (Ctrl+F9)
+- **VS Code**: Open terminal and run `dotnet build`
+
+![img.png](img.png)
+
+Click on play button to run the API, this will open the swagger UI in the browser. That means the API is running and you can test it from there.
+
 ### Using CLI
 ```bash
 # Navigate to project directory
@@ -26,11 +35,6 @@ dotnet build
 # Build for release
 dotnet build -c Release
 ```
-
-### Using IDE
-- **Visual Studio**: Build → Build Solution (Ctrl+Shift+B)
-- **Rider**: Build → Build Project (Ctrl+F9)
-- **VS Code**: Open terminal and run `dotnet build`
 
 ---
 
@@ -70,6 +74,19 @@ The API will be available at:
 3. Configure `launch.json` if not present
 
 ---
+
+## Test Host/Port
+
+By default, running `dotnet run` in the API project starts it on ports 5000/5001. To make it accessible to the test project (on 5232), launch the API on that port:
+
+```bash
+dotnet run --urls "http://localhost:5232"
+```
+
+Or, adjust your Properties/launchSettings.json accordingly.
+
+---
+
 
 ## Swagger UI
 
