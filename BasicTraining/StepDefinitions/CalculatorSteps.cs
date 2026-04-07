@@ -10,28 +10,26 @@ using Reqnroll.BoDi;
 namespace QATraining.Tests.StepDefinitions;
 
 [Binding]
-public class CalculatorSteps(ObjectContainer container, ScenarioContext scenarioContext) : BaseStepDefinitions(container, scenarioContext)
+public class CalculatorSteps(ObjectContainer container, ScenarioContext scenarioContext, CalculatorAPIClient calculatorApiClient)
 {
-    private CalculatorAPIClient _calculator;
 
-    [Given(@"I have a calculator")]
-    public void GivenIHaveACalculator()
+    [Given("I have a calculator api running")]
+    public async Task GivenIHaveACalculatorApiRunning()
     {
-        const string url = "http://localhost:5232";
-        var httpClient = new HttpClient();
-        _calculator = new CalculatorAPIClient(url, httpClient);
+        var response = await calculatorApiClient.HealthAsync();
+        response.StatusCode.Should().Be((int)HttpStatusCode.OK);
     }
 
     [Given("I my first number is {int}")]
     public void GivenIMyFirstNumberIs(int number)
     {
-        ScenarioContext.SetFirstNumber(number);
+        scenarioContext.SetFirstNumber(number);
     }
 
     [Given("I my second number is {int}")]
     public void GivenIMySecondNumberIs(int number)
     {
-        ScenarioContext.SetSecondNumber(number);
+        scenarioContext.SetSecondNumber(number);
     }
     
     [When("I add the two numbers")]
@@ -39,12 +37,12 @@ public class CalculatorSteps(ObjectContainer container, ScenarioContext scenario
     {
         var request = new CalculationRequest()
         {
-            Number1 = ScenarioContext.GetFirstNumber(),
-            Number2 = ScenarioContext.GetSecondNumber()
+            Number1 = scenarioContext.GetFirstNumber(),
+            Number2 = scenarioContext.GetSecondNumber()
         };
-        ScenarioContext.SetOperation("+");
-        var response = await _calculator.AddAsync(request);
-        ScenarioContext.SetResponse(response);
+        scenarioContext.SetOperation("+");
+        var response = await calculatorApiClient.AddAsync(request);
+        scenarioContext.SetResponse(response);
     }
 
     [When("I subtract the two numbers")]
@@ -52,21 +50,21 @@ public class CalculatorSteps(ObjectContainer container, ScenarioContext scenario
     {
         var request = new CalculationRequest()
         {
-            Number1 = ScenarioContext.GetFirstNumber(),
-            Number2 = ScenarioContext.GetSecondNumber()
+            Number1 = scenarioContext.GetFirstNumber(),
+            Number2 = scenarioContext.GetSecondNumber()
         };
-        ScenarioContext.SetOperation("-");
-        var response = await _calculator.SubtractAsync(request);
-        ScenarioContext.SetResponse(response);
+        scenarioContext.SetOperation("-");
+        var response = await calculatorApiClient.SubtractAsync(request);
+        scenarioContext.SetResponse(response);
     }
 
     [Then("the result should be {int}")]
     public void ThenTheResultShouldBe(int result)
     {
-        var firstNumber = ScenarioContext.GetFirstNumber();
-        var secondNumber = ScenarioContext.GetSecondNumber();
-        var operation = ScenarioContext.GetOperation();
-        var response = ScenarioContext.GetResponse();
+        var firstNumber = scenarioContext.GetFirstNumber();
+        var secondNumber = scenarioContext.GetSecondNumber();
+        var operation = scenarioContext.GetOperation();
+        var response = scenarioContext.GetResponse();
         response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         response.Result.Number1.Should().Be(firstNumber);
         response.Result.Number2.Should().Be(secondNumber);
