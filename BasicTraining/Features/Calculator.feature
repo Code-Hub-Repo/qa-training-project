@@ -5,7 +5,7 @@ I want to use a calculator
 So that I can perform basic arithmetic operations
     
     Background: 
-        Given I have a calculator
+        Given I have a calculator api running
 
     @smoke
     Scenario: Add two numbers
