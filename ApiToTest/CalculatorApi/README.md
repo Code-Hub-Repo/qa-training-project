@@ -36,46 +36,13 @@ dotnet build
 dotnet build -c Release
 ```
 
----
+## Swagger UI
 
-## Run Locally
-
-### Using CLI
-```bash
-dotnet run
-```
-
-The API will be available at:
-- HTTP: `http://localhost:5000`
-- HTTPS: `https://localhost:5001`
-
-### Using IDE
-- **Visual Studio**: Press F5 or click Run
-- **Rider**: Click Run button or press Shift+F10
+Swagger is enabled and accessible at the root URL:
+- **Swagger UI**: `http://localhost:5232/index.html`
+- **Swagger JSON**: `http://localhost:5232/swagger/v1/swagger.json`
 
 ---
-
-## Debug Locally
-
-### Using Rider
-1. Open the project in Rider
-2. Set breakpoints by clicking on the left margin
-3. Click the debug icon (bug) or press Shift+F9
-4. Use the debugger panel to step through code, inspect variables
-
-### Using Visual Studio
-1. Set breakpoints
-2. Press F5 to start debugging
-3. Use the Diagnostic Tools and Locals window
-
-### Using VS Code
-1. Install C# extension
-2. Go to Run → Start Debugging (F5)
-3. Configure `launch.json` if not present
-
----
-
-## Test Host/Port
 
 By default, running `dotnet run` in the API project starts it on ports 5000/5001. To make it accessible to the test project (on 5232), launch the API on that port:
 
@@ -86,16 +53,6 @@ dotnet run --urls "http://localhost:5232"
 Or, adjust your Properties/launchSettings.json accordingly.
 
 ---
-
-
-## Swagger UI
-
-Swagger is enabled and accessible at the root URL:
-- `http://localhost:5000/` (HTTP)
-- `https://localhost:5001/` (HTTPS)
-- **Swagger JSON**: `http://localhost:5000/swagger/v1/swagger.json`
-
-### Endpoints
 
 #### POST /api/calculator/add
 Add two numbers.
@@ -154,37 +111,6 @@ curl -X POST "https://localhost:5001/api/calculator/subtract" \
   -H "Content-Type: application/json" \
   -d '{"number1": 10, "number2": 5}'
 ```
-
----
-
-## Deploy
-
-### Docker
-```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /app
-COPY bin/Release/net8.0/publish/ /app
-ENTRYPOINT ["dotnet", "CalculatorApi.dll"]
-```
-
-Build and run:
-```bash
-dotnet publish -c Release
-docker build -t calculator-api .
-docker run -p 8080:8080 calculator-api
-```
-
-### Azure App Service
-1. Publish: `dotnet publish -c Release`
-2. Deploy via Azure CLI or GitHub Actions
-3. Configure HTTPS binding in Azure portal
-
-### IIS
-1. Install ASP.NET Core Hosting Bundle
-2. Publish and copy files to IIS directory
-3. Create application pool and site
-
----
 
 ## Configuration
 

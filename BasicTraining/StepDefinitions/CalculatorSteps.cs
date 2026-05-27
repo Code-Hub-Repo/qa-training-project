@@ -1,18 +1,17 @@
 using System.Net;
-using Allure.Commons;
 using CalculatorAPI;
 using FluentAssertions;
 using QATraining.Tests.Helper;
-using QATraining.Tests.Helper.Enums;
 using Reqnroll;
-using Reqnroll.BoDi;
 
 namespace QATraining.Tests.StepDefinitions;
 
 [Binding]
-public class CalculatorSteps(ObjectContainer container, ScenarioContext scenarioContext, CalculatorAPIClient calculatorApiClient)
+public class CalculatorSteps(
+    ScenarioContext scenarioContext,
+    CalculatorAPIClient calculatorApiClient)
 {
-
+    
     [Given("I have a calculator api running")]
     public async Task GivenIHaveACalculatorApiRunning()
     {
