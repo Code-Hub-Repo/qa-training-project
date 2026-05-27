@@ -32,4 +32,8 @@
   <ItemGroup>
     <Content Include="Features\Calculator.feature" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helper\" />
+  </ItemGroup>
 </Project>
